@@ -20,3 +20,8 @@ Get it via
 To upload file use    
 ```s3-uploader -path=/path/to/file -bucket=bucket_name```    
 You can specify parameter ```-log=true``` for logging AWS requests and responses.
+
+##### TODO
+1. Set region
+2. Set key not only by filename
+3. Uploading whole directory with saving structure of it
