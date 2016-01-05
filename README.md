@@ -24,3 +24,4 @@ You can specify parameter ```-log=true``` for logging AWS requests and responses
 ##### TODO  
 1. Set custom key (like folder structure)
 2. Uploading whole directory with saving structure of it
+3. Alternative ways to authenticate in AWS
