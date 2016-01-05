@@ -8,7 +8,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
-	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 )
 
@@ -16,6 +16,8 @@ var (
 	logging  = flag.Bool("log", false, "Enable logging")
 	filepath = flag.String("path", "", "Path to file")
 	bucket   = flag.String("bucket", "", "Specify S3 bucket")
+	region   = flag.String("region", "us-east-1", "Set S3 region")
+	rename   = flag.String("rename", "", "Set a new name for file")
 )
 
 func main() {
@@ -34,9 +36,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	service := s3manager.NewUploader(&s3manager.UploadOptions{
-		S3: s3.New(createConfig()),
-	})
+	session := session.New(createConfig())
+	service := s3manager.NewUploader(session)
+
 	resp, err := service.Upload(&s3manager.UploadInput{
 		Bucket: aws.String(*bucket),
 		Key:    aws.String("/" + getFileName(*filepath)),
@@ -53,18 +55,22 @@ func main() {
 }
 
 func getFileName(filepath string) string {
-	index := strings.LastIndex(filepath, "/")
-	if index != -1 {
-		return filepath[index+1:]
+	if *rename != "" {
+		return *rename
 	} else {
-		return ""
+		index := strings.LastIndex(filepath, "/")
+		if index != -1 {
+			return filepath[index+1:]
+		} else {
+			return ""
+		}
 	}
 }
 
 func createConfig() *aws.Config {
 	config := aws.NewConfig()
 	config.WithCredentials(credentials.NewEnvCredentials())
-	config.WithRegion("us-east-1")
+	config.WithRegion(*region)
 	if *logging {
 		config.WithLogLevel(aws.LogDebugWithHTTPBody)
 	}
