@@ -16,9 +16,12 @@ export AWS_SECRET_ACCESS_KEY=<secret>
 
 ##### Running
 Get it via    
-```go get github.com/artemnikitin/s3-uploader```    
-To upload file use    
-```s3-uploader -path=/path/to/file -bucket=bucket_name```    
+``` go get github.com/artemnikitin/s3-uploader ```    
+To upload file use:       
+``` s3-uploader -path=/path/to/file -bucket=bucket_name ```    
+You can set up region of S3 bucket:   
+``` s3-uploader -path=/path/to/file -bucket=bucket_name -region=region-name ```    
+By default, region will be set to "us-east-1".   
 You can specify parameter ```-log=true``` for logging AWS requests and responses.
 
 ##### TODO  
