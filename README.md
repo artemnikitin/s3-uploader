@@ -16,15 +16,24 @@ export AWS_SECRET_ACCESS_KEY=<secret>
 
 ##### Running
 Get it via    
-``` go get github.com/artemnikitin/s3-uploader ```    
-To upload file use:       
-``` s3-uploader -path=/path/to/file -bucket=bucket_name ```    
-You can set up region of S3 bucket:   
+``` go get github.com/artemnikitin/s3-uploader ``` 
+   
+Required parameters:          
+``` s3-uploader -path=/path/to/file -bucket=bucket_name ```
+   
+Additional optional parameters:   
+- ```region``` set S3 region, by default region will be set to ```us-east-1```       
+Example:    
 ``` s3-uploader -path=/path/to/file -bucket=bucket_name -region=region-name ```    
-By default, region will be set to "us-east-1".   
+- ```rename``` gives ability to rename file for upload      
+Example:   
+``` s3-uploader -path=/path/to/file -bucket=bucket_name -rename=newname.file```   
+- ```uploadto``` create specific key (like folder structure), by default equla to ```/```   
+Example:   
+``` s3-uploader -path=/path/to/file -bucket=bucket_name -uploadto=/path/inside/S3/bucket/```  
+
 You can specify parameter ```-log=true``` for logging AWS requests and responses.
 
 ##### TODO  
-1. Set custom key (like folder structure)
-2. Uploading whole directory with saving structure of it
-3. Alternative ways to authenticate in AWS
+1. Uploading whole directory with saving structure of it
+2. Alternative ways to authenticate in AWS
