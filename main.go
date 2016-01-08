@@ -13,11 +13,12 @@ import (
 )
 
 var (
-	logging  = flag.Bool("log", false, "Enable logging")
-	filepath = flag.String("path", "", "Path to file")
-	bucket   = flag.String("bucket", "", "Specify S3 bucket")
-	region   = flag.String("region", "us-east-1", "Set S3 region")
-	rename   = flag.String("rename", "", "Set a new name for file")
+	logging    = flag.Bool("log", false, "Enable logging")
+	filepath   = flag.String("path", "", "Path to file")
+	bucket     = flag.String("bucket", "", "Specify S3 bucket")
+	region     = flag.String("region", "us-east-1", "Set S3 region")
+	rename     = flag.String("rename", "", "Set a new name for file")
+	uploadpath = flag.String("uploadto", "/", "Set a specific path for a file inside S3 bucket")
 )
 
 func main() {
@@ -41,7 +42,7 @@ func main() {
 
 	resp, err := service.Upload(&s3manager.UploadInput{
 		Bucket: aws.String(*bucket),
-		Key:    aws.String("/" + getFileName(*filepath)),
+		Key:    aws.String(*uploadpath + getFileName(*filepath)),
 		Body:   file,
 	})
 	if err != nil {
