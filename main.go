@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"io"
+	"log"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
@@ -33,26 +35,26 @@ func main() {
 
 	file, err := os.Open(*filepath)
 	if err != nil {
-		fmt.Println("Failed to open a file.", err)
-		os.Exit(1)
+		log.Fatal("Failed to open a file with an error: ", err)
 	}
 
 	session := session.New(createConfig())
 	service := s3manager.NewUploader(session)
 
-	resp, err := service.Upload(&s3manager.UploadInput{
-		Bucket: aws.String(*bucket),
-		Key:    aws.String(*uploadpath + getFileName(*filepath)),
+	uploadFile(*service, *bucket, *uploadpath + getFileName(*filepath), file)
+}
+
+func uploadFile(uploader s3manager.Uploader, bucket, key string, file io.Reader) {
+	resp, err := uploader.Upload(&s3manager.UploadInput{
+		Bucket: aws.String(bucket),
+		Key:    aws.String(key),
 		Body:   file,
 	})
 	if err != nil {
-		fmt.Println("Failed to upload a file.", err)
-		os.Exit(1)
+		log.Println("Failed to upload a file because of: ", err)
+		return
 	}
-
-	fmt.Println("---------------------")
-	fmt.Println("File was successfully uploaded!")
-	fmt.Println("Location:", resp.Location)
+	fmt.Println("File was successfully uploaded! Location: ", resp.Location)
 }
 
 func getFileName(filepath string) string {
