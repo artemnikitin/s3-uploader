@@ -3,10 +3,10 @@ package main
 import (
 	"flag"
 	"fmt"
-	"os"
-	"strings"
 	"io"
 	"log"
+	"os"
+	"strings"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
@@ -41,7 +41,7 @@ func main() {
 	session := session.New(createConfig())
 	service := s3manager.NewUploader(session)
 
-	uploadFile(*service, *bucket, *uploadpath + getFileName(*filepath), file)
+	uploadFile(*service, *bucket, *uploadpath+getFileName(*filepath), file)
 }
 
 func uploadFile(uploader s3manager.Uploader, bucket, key string, file io.Reader) {
