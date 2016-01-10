@@ -6,7 +6,8 @@ import (
 	"io"
 	"log"
 	"os"
-	"strings"
+	"path/filepath"
+	"sync"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
@@ -16,7 +17,7 @@ import (
 
 var (
 	logging    = flag.Bool("log", false, "Enable logging")
-	filepath   = flag.String("path", "", "Path to file")
+	filespath  = flag.String("path", "", "Path to file")
 	bucket     = flag.String("bucket", "", "Specify S3 bucket")
 	region     = flag.String("region", "us-east-1", "Set S3 region")
 	rename     = flag.String("rename", "", "Set a new name for file")
@@ -25,7 +26,7 @@ var (
 
 func main() {
 	flag.Parse()
-	if *filepath == "" || *bucket == "" {
+	if *filespath == "" || *bucket == "" {
 		fmt.Println("Please specify correct parameters!")
 		fmt.Println("You should specify:")
 		fmt.Println("-path with path to file you want to upload")
@@ -33,20 +34,30 @@ func main() {
 		os.Exit(1)
 	}
 
-	file, err := os.Open(*filepath)
+	file, err := os.Open(*filespath)
 	if err != nil {
 		log.Fatal("Failed to open a file with an error: ", err)
+	}
+	defer file.Close()
+	info, err := file.Stat()
+	if err != nil {
+		log.Fatal("Failed to get info about file with an error: ", err)
 	}
 
 	session := session.New(createConfig())
 	service := s3manager.NewUploader(session)
 
-	uploadFile(*service, *bucket, *uploadpath+getFileName(*filepath), file)
+	switch mode := info.Mode(); {
+	case mode.IsDir():
+		uploadDirectory(*service, *file)
+	case mode.IsRegular():
+		uploadFile(*service, *uploadpath+getFileName(*filespath), file)
+	}
 }
 
-func uploadFile(uploader s3manager.Uploader, bucket, key string, file io.Reader) {
+func uploadFile(uploader s3manager.Uploader, key string, file io.Reader) {
 	resp, err := uploader.Upload(&s3manager.UploadInput{
-		Bucket: aws.String(bucket),
+		Bucket: aws.String(*bucket),
 		Key:    aws.String(key),
 		Body:   file,
 	})
@@ -54,20 +65,34 @@ func uploadFile(uploader s3manager.Uploader, bucket, key string, file io.Reader)
 		log.Println("Failed to upload a file because of: ", err)
 		return
 	}
-	fmt.Println("File was successfully uploaded! Location: ", resp.Location)
+	fmt.Println("File was successfully uploaded! Location:", resp.Location)
 }
 
-func getFileName(filepath string) string {
-	if *rename != "" {
-		return *rename
-	} else {
-		index := strings.LastIndex(filepath, "/")
-		if index != -1 {
-			return filepath[index+1:]
-		} else {
-			return ""
+func uploadDirectory(uploader s3manager.Uploader, file os.File) {
+	var wg sync.WaitGroup
+	err := filepath.Walk(*filespath, func(path string, info os.FileInfo, err error) error {
+		if !info.IsDir() {
+			file, err := os.Open(path)
+			if err == nil {
+				path := getPathInsideFolder(path, getFolderName(*filespath))
+				wg.Add(1)
+				go func() {
+					uploadFile(uploader, createKey(path), file)
+					wg.Done()
+					defer file.Close()
+				}()
+			} else {
+				log.Println("Can't open a file because of: ", err)
+			}
 		}
+		return nil
+	})
+	wg.Wait()
+	if err != nil {
+		log.Println("Can't process directory because of:", err)
+		return
 	}
+	fmt.Println("Directory was successfully uploaded!")
 }
 
 func createConfig() *aws.Config {
