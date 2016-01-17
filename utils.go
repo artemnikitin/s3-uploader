@@ -46,14 +46,12 @@ func endWith(original, substring string) bool {
 func getFileName(filepath string) string {
 	if *rename != "" {
 		return *rename
-	} else {
-		index := strings.LastIndex(filepath, "/")
-		if index != -1 {
-			return filepath[index+1:]
-		} else {
-			return ""
-		}
 	}
+	index := strings.LastIndex(filepath, "/")
+	if index == -1 {
+		return ""
+	}
+	return filepath[index+1:]
 }
 
 func getFolderName(filepath string) string {
