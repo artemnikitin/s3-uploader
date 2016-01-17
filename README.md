@@ -34,7 +34,7 @@ Example:
 ``` 
 s3-uploader -path=/path/to/file -bucket=bucket_name -region=region-name 
 ```    
-- ```rename``` gives ability to rename file for upload      
+- ```rename``` gives an ability to rename file for upload      
 Example:   
 ``` 
 s3-uploader -path=/path/to/file -bucket=bucket_name -rename=newname.file
