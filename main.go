@@ -65,7 +65,7 @@ func uploadFile(uploader s3manager.Uploader, key string, file io.Reader) {
 		log.Println("Failed to upload a file because of: ", err)
 		return
 	}
-	fmt.Println("File was successfully uploaded! Location:", resp.Location)
+	log.Println("File was successfully uploaded! Location:", resp.Location)
 }
 
 func uploadDirectory(uploader s3manager.Uploader, file os.File) {
@@ -92,7 +92,7 @@ func uploadDirectory(uploader s3manager.Uploader, file os.File) {
 		log.Println("Can't process directory because of:", err)
 		return
 	}
-	fmt.Println("Directory was successfully uploaded!")
+	log.Println("Directory was successfully uploaded!")
 }
 
 func createConfig() *aws.Config {
