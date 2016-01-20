@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"testing"
 )
 
@@ -125,5 +126,28 @@ func TestCreateKey(t *testing.T) {
 	}
 	if createKey(path2) != "/vvv/ddd/ddd/qwe/asd.jjj" {
 		t.Error("Created key should be equal to", *uploadpath+path)
+	}
+}
+
+func TestGetFileName(t *testing.T) {
+	*rename = ""
+
+	path := getFileName("dfd.kkk")
+	if path != "dfd.kkk" {
+		log.Println("path =", path)
+		t.Error("Should return dfd.kkk for file")
+	}
+
+	path = getFileName("/dfdfd/www/dfd.kkk")
+	if path != "dfd.kkk" {
+		log.Println("path =", path)
+		t.Error("Should return dfd.kkk for path")
+	}
+
+	*rename = "dfg.lll"
+	path = getFileName("/dfdfd/www/dfd.kkk")
+	if path != "dfg.lll" {
+		log.Println("path =", path)
+		t.Error("Should return dfg.lll if rename option is specified")
 	}
 }

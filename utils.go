@@ -49,7 +49,7 @@ func getFileName(filepath string) string {
 	}
 	index := strings.LastIndex(filepath, "/")
 	if index == -1 {
-		return ""
+		return filepath
 	}
 	return filepath[index+1:]
 }
