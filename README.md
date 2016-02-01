@@ -5,7 +5,7 @@ Simple uploader for AWS S3, written in Go
 
 Only depends on AWS SDK. Install it via    
 ```
-go get -u github.com/aws/aws-sdk-go/...
+go get github.com/aws/aws-sdk-go/...
 ```
 
 ##### AWS Credentials
