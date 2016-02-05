@@ -17,11 +17,11 @@ import (
 
 var (
 	logging    = flag.Bool("log", false, "Enable logging")
-	filespath  = flag.String("path", "", "Path to file")
-	bucket     = flag.String("bucket", "", "Specify S3 bucket")
 	region     = flag.String("region", "us-east-1", "Set S3 region")
+	bucket     = flag.String("bucket", "", "Specify S3 bucket")
+	filespath  = flag.String("path", "", "Path to file")
 	rename     = flag.String("rename", "", "Set a new name for file")
-	uploadpath = flag.String("uploadto", "/", "Set a specific path for a file inside S3 bucket")
+	uploadpath = flag.String("uploadto", "", "Set a specific path for a file inside S3 bucket")
 )
 
 func main() {
