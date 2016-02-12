@@ -1,6 +1,5 @@
-# s3-uploader
-Simple uploader for AWS S3, written in Go
-
+# s3-uploader [![Go Report Card](https://goreportcard.com/badge/artemnikitin/s3-uploader)](https://goreportcard.com/report/artemnikitin/s3-uploader)
+Simple uploader for AWS S3, written in Go    
 ##### Dependency
 
 Only depends on AWS SDK. Install it via    
