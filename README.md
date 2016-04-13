@@ -1,6 +1,6 @@
 # s3-uploader 
 [![Go Report Card](https://goreportcard.com/badge/artemnikitin/s3-uploader)](https://goreportcard.com/report/artemnikitin/s3-uploader) [![](https://circleci.com/gh/artemnikitin/s3-uploader.svg?style=shield&circle-token=7f9634b483cd46ffb7b51d8b1c1c84ca4431b779)](https://circleci.com/gh/artemnikitin/s3-uploader.svg?style=shield&circle-token=7f9634b483cd46ffb7b51d8b1c1c84ca4431b779)    
-Simple uploader for AWS S3, written in Go    
+Simple uploader for AWS S3, written in Go. Development continue [here](https://github.com/artemnikitin/s3-tool)   
 ##### Dependency
 
 Only depends on AWS SDK. Install it via    
