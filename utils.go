@@ -13,7 +13,6 @@ func createKey(path string) string {
 			return path
 		}
 		buffer.WriteString(path)
-		return buffer.String()
 	} else {
 		if !endWith(*uploadpath, "/") && !startWith(path, "/") {
 			buffer.WriteString("/")
@@ -23,8 +22,8 @@ func createKey(path string) string {
 		} else {
 			buffer.WriteString(path)
 		}
-		return buffer.String()
 	}
+	return buffer.String()
 }
 
 func startWith(original, substring string) bool {
@@ -55,13 +54,15 @@ func getFileName(filepath string) string {
 }
 
 func getFolderName(filepath string) string {
+	var result string
 	if endWith(filepath, "/") {
 		pos := strings.LastIndex(string(filepath[:len(filepath)-1]), "/")
-		return string(filepath[pos+1 : len(filepath)-1])
+		result = filepath[pos+1 : len(filepath)-1]
 	} else {
 		pos := strings.LastIndex(filepath, "/")
-		return string(filepath[pos+1:])
+		result = filepath[pos+1:]
 	}
+	return result
 }
 
 func getPathInsideFolder(path, folder string) string {
