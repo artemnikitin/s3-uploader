@@ -7,17 +7,17 @@ import (
 
 func createKey(path string) string {
 	var buffer bytes.Buffer
-	buffer.WriteString(*uploadpath)
-	if *uploadpath == "/" {
+	buffer.WriteString(*uploadPath)
+	if *uploadPath == "/" {
 		if startWith(path, "/") {
 			return path
 		}
 		buffer.WriteString(path)
 	} else {
-		if !endWith(*uploadpath, "/") && !startWith(path, "/") {
+		if !endWith(*uploadPath, "/") && !startWith(path, "/") {
 			buffer.WriteString("/")
 		}
-		if endWith(*uploadpath, "/") && startWith(path, "/") {
+		if endWith(*uploadPath, "/") && startWith(path, "/") {
 			buffer.WriteString(string(path[1:]))
 		} else {
 			buffer.WriteString(path)

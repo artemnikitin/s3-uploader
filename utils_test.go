@@ -87,7 +87,7 @@ func TestCreateKey(t *testing.T) {
 	}
 
 	for _, v := range cases {
-		*uploadpath = v.uploadPath
+		*uploadPath = v.uploadPath
 		result := createKey(v.path)
 		if result != v.res {
 			t.Errorf("For path: %s actual key: %s, expected: %s", v.path, result, v.res)

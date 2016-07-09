@@ -19,14 +19,14 @@ var (
 	logging    = flag.Bool("log", false, "Enable logging")
 	region     = flag.String("region", "us-east-1", "Set S3 region")
 	bucket     = flag.String("bucket", "", "Specify S3 bucket")
-	filespath  = flag.String("path", "", "Path to file")
+	filesPath  = flag.String("path", "", "Path to file")
 	rename     = flag.String("rename", "", "Set a new name for file")
-	uploadpath = flag.String("uploadto", "", "Set a specific path for a file inside S3 bucket")
+	uploadPath = flag.String("uploadto", "", "Set a specific path for a file inside S3 bucket")
 )
 
 func main() {
 	flag.Parse()
-	if *filespath == "" || *bucket == "" {
+	if *filesPath == "" || *bucket == "" {
 		fmt.Println("Please specify correct parameters!")
 		fmt.Println("You should specify:")
 		fmt.Println("-path with path to file you want to upload")
@@ -34,7 +34,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	file, err := os.Open(*filespath)
+	file, err := os.Open(*filesPath)
 	if err != nil {
 		log.Fatal("Failed to open a file with an error: ", err)
 	}
@@ -51,7 +51,7 @@ func main() {
 	case mode.IsDir():
 		uploadDirectory(*service, *file)
 	case mode.IsRegular():
-		uploadFile(*service, *uploadpath+getFileName(*filespath), file)
+		uploadFile(*service, *uploadPath+getFileName(*filesPath), file)
 	}
 }
 
@@ -70,11 +70,11 @@ func uploadFile(uploader s3manager.Uploader, key string, file io.Reader) {
 
 func uploadDirectory(uploader s3manager.Uploader, file os.File) {
 	var wg sync.WaitGroup
-	err := filepath.Walk(*filespath, func(path string, info os.FileInfo, err error) error {
+	err := filepath.Walk(*filesPath, func(path string, info os.FileInfo, err error) error {
 		if !info.IsDir() {
 			file, err := os.Open(path)
 			if err == nil {
-				path := getPathInsideFolder(path, getFolderName(*filespath))
+				path := getPathInsideFolder(path, getFolderName(*filesPath))
 				wg.Add(1)
 				go func() {
 					uploadFile(uploader, createKey(path), file)
