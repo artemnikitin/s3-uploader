@@ -1,11 +1,11 @@
 # s3-uploader 
 [![Go Report Card](https://goreportcard.com/badge/artemnikitin/s3-uploader)](https://goreportcard.com/report/artemnikitin/s3-uploader) [![](https://circleci.com/gh/artemnikitin/s3-uploader.svg?style=shield&circle-token=7f9634b483cd46ffb7b51d8b1c1c84ca4431b779)](https://circleci.com/gh/artemnikitin/s3-uploader.svg?style=shield&circle-token=7f9634b483cd46ffb7b51d8b1c1c84ca4431b779)    
-Simple uploader for AWS S3, written in Go. Development continue [here](https://github.com/artemnikitin/s3-tool)   
+Simple uploader for AWS S3, written in Go. Development continues [here](https://github.com/artemnikitin/s3-tool)   
 ##### Dependency
 
 Only depends on AWS SDK. Install it via    
 ```
-go get github.com/aws/aws-sdk-go/...
+go get -u github.com/aws/aws-sdk-go/...
 ```
 
 ##### AWS Credentials
@@ -19,7 +19,7 @@ export AWS_SECRET_ACCESS_KEY=<secret>
 ##### Running
 Get it via    
 ``` 
-go get github.com/artemnikitin/s3-uploader 
+go get -v github.com/artemnikitin/s3-uploader 
 ``` 
    
 Required parameters:          
@@ -46,7 +46,3 @@ s3-uploader -path=/path/to/file -bucket=bucket_name -uploadto=/path/inside/S3/bu
 ```  
 
 You can specify parameter ```-log=true``` for logging AWS requests and responses.
-
-##### TODO  
-1. Managing additional files details (like permissions, storage class, etc)
-2. Alternative ways to authenticate in AWS
