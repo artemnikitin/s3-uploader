@@ -19,7 +19,7 @@ export AWS_SECRET_ACCESS_KEY=<secret>
 ##### Running
 Get it via    
 ``` 
-go get -v github.com/artemnikitin/s3-uploader 
+go get -u github.com/artemnikitin/s3-uploader 
 ``` 
    
 Required parameters:          
