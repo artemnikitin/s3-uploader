@@ -1,5 +1,5 @@
 # s3-uploader 
-[![Go Report Card](https://goreportcard.com/badge/artemnikitin/s3-uploader)](https://goreportcard.com/report/artemnikitin/s3-uploader) [![](https://circleci.com/gh/artemnikitin/s3-uploader.svg?style=shield&circle-token=7f9634b483cd46ffb7b51d8b1c1c84ca4431b779)](https://circleci.com/gh/artemnikitin/s3-uploader.svg?style=shield&circle-token=7f9634b483cd46ffb7b51d8b1c1c84ca4431b779)    
+[![Go Report Card](https://goreportcard.com/badge/artemnikitin/s3-uploader)](https://goreportcard.com/report/artemnikitin/s3-uploader)   [![codebeat badge](https://codebeat.co/badges/67984735-0e55-4d39-aa38-6213b14ed456)](https://codebeat.co/projects/github-com-artemnikitin-s3-uploader)   [![Build Status](https://travis-ci.org/artemnikitin/s3-uploader.svg?branch=master)](https://travis-ci.org/artemnikitin/s3-uploader)
 Simple uploader for AWS S3, written in Go. Development continues [here](https://github.com/artemnikitin/s3-tool)   
 ##### Dependency
 
@@ -19,7 +19,7 @@ export AWS_SECRET_ACCESS_KEY=<secret>
 ##### Running
 Get it via    
 ``` 
-go get -u github.com/artemnikitin/s3-uploader 
+go get github.com/artemnikitin/s3-uploader 
 ``` 
    
 Required parameters:          
