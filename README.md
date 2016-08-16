@@ -5,7 +5,7 @@ Simple uploader for AWS S3, written in Go. Development continues [here](https://
 
 Only depends on AWS SDK. Install it via    
 ```
-go get -u github.com/aws/aws-sdk-go/...
+go get github.com/aws/aws-sdk-go/...
 ```
 
 ##### AWS Credentials
@@ -45,4 +45,4 @@ Example:
 s3-uploader -path=/path/to/file -bucket=bucket_name -uploadto=/path/inside/S3/bucket/
 ```  
 
-You can specify parameter ```-log=true``` for logging AWS requests and responses.
+You can specify parameter ```-log``` for logging AWS requests and responses.
